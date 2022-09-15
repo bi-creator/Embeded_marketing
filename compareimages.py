@@ -2,19 +2,19 @@ from skimage import io
 import cv2
 
 
-def imagematching(testimage, imagecomp):
+def imagematching(testimage, imageurl):
     # test image
 
-    image = cv2.imread(testimage)
-    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # image = cv2.imread(testimage)
+    gray_image = cv2.cvtColor(testimage, cv2.COLOR_BGR2GRAY)
     histogram = cv2.calcHist([gray_image], [0],
                              None, [256], [0, 256])
 
     # data1 image
 
-    image_comp = io.imread(imagecomp)
-    image = cv2.imread(image_comp)
-    gray_image1 = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    image_comp = io.imread(imageurl)
+    # image = cv2.imread(image_comp)
+    gray_image1 = cv2.cvtColor(image_comp, cv2.COLOR_BGR2GRAY)
     histogram1 = cv2.calcHist([gray_image1], [0],
                               None, [256], [0, 256])
 
@@ -27,4 +27,4 @@ def imagematching(testimage, imagecomp):
         i += 1
     c1 = c1**(1 / 2)
 
-    return(c1)
+    return(c1[0])
