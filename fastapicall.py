@@ -4,10 +4,17 @@ import io
 from serpapi import GoogleSearch
 from compareimages import imagematching
 import numpy
-
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
 
+)
 # @app.post("/files/")
 # async def create_file(file: bytes = File(...)):
 #     image = Image.open(io.BytesIO(file)).convert('RGB')
@@ -36,4 +43,6 @@ def getdata(productname: str = '', file: bytes = File(...)):
     shopping_results = results["shopping_results"]
     for i in shopping_results:
         i['distance'] = imagematching(open_cv_image, i['thumbnail'])
-    return shopping_results
+    shopping_results.sort(key=lambda x: x['distance'])
+    newlist = sorted(shopping_results, key=lambda x: x['distance'])
+    return newlist
