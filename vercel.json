@@ -1,0 +1,5 @@
+{
+    "builds": [
+      {"src": "/fastapicall.py", "use": "@now/python"}
+    ]
+}
